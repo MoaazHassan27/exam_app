@@ -13,7 +13,7 @@ class Explore extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SearchBarr(),
-        SizedBox(height: 40.h),
+        SizedBox(height: 20.h),
         Padding(
           padding: REdgeInsets.all(8.0),
           child: Text(

@@ -50,6 +50,14 @@ class _ForgetPasswordState extends State<ForgetPassword> {
               );
             case ForgetPasswordSuccessState():
               Navigator.pop(context);
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text("OTP sent successfully.",
+                      style: AppStyle.snackBarMessage),
+                  backgroundColor: Colors.green,
+                  duration: Duration(seconds: 2),
+                ),
+              );
               Navigator.pushReplacementNamed(
                   context, RoutesManager.emailVerification,
                   arguments: emailController.text);

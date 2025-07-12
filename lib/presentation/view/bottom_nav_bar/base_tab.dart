@@ -1,4 +1,5 @@
 import 'package:exam_app/core/assets_manager.dart';
+import 'package:exam_app/core/colors_manager.dart';
 import 'package:exam_app/presentation/view/bottom_nav_bar/explore.dart';
 import 'package:exam_app/presentation/view/bottom_nav_bar/profile.dart';
 import 'package:exam_app/presentation/view/bottom_nav_bar/result.dart';
@@ -31,7 +32,9 @@ class _BaseTabState extends State<BaseTab> {
         appBar: AppBar(
           title: Text(
             appbarTitle,
-            style: AppStyle.appBarTitle,
+            style: AppStyle.appBarTitle.copyWith(
+              color: ColorsManager.blueButton,
+            ),
           ),
         ),
         bottomNavigationBar: buildBottomNavBar(),

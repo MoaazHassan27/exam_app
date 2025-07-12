@@ -1,5 +1,6 @@
 import 'package:exam_app/core/app_style.dart';
 import 'package:exam_app/core/assets_manager.dart';
+import 'package:exam_app/core/colors_manager.dart';
 import 'package:exam_app/data/models/exams_response.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,7 +13,7 @@ class ExamItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:  REdgeInsets.all(8.0),
+      padding: REdgeInsets.all(8.0),
       child: Container(
         height: 150.h,
         width: double.infinity,
@@ -36,9 +37,27 @@ class ExamItem extends StatelessWidget {
               height: 100.h,
             ),
             SizedBox(width: 5.w),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  item.title ?? '',
+                  style: AppStyle.forgetPasswordTitle,
+                ),
+                SizedBox(height: 5.h),
+                Text(
+                  item.numberOfQuestions != null
+                      ? '${item.numberOfQuestions} Question'
+                      : '0 Questions',
+                  style: AppStyle.searchText,
+                ),
+              ],
+            ),
+            Spacer(),
             Text(
-              item.title ?? '',
-              style: AppStyle.forgetPasswordTitle,
+              item.duration != null ? '${item.duration} Minutes' : '0 min',
+              style:
+                  AppStyle.searchText.copyWith(color: ColorsManager.blueButton),
             ),
           ]),
         ),

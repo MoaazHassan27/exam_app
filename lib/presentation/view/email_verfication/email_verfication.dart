@@ -60,6 +60,14 @@ class _EmailVerificationState extends State<EmailVerification> {
               );
             case ForgetPasswordSuccessState():
               Navigator.pop(context);
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text("OTP resended successfully.",
+                      style: AppStyle.snackBarMessage),
+                  backgroundColor: Colors.green,
+                  duration: Duration(seconds: 2),
+                ),
+              );
               verificationController.clear();
               setState(() {});
             case VerificationSuccessState():
@@ -81,14 +89,35 @@ class _EmailVerificationState extends State<EmailVerification> {
               );
             case VerificationErrorState():
               Navigator.pop(context);
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(
-                    "Error",
-                    style: AppStyle.snackBarMessage,
-                  ),
-                  backgroundColor: Colors.red,
-                  duration: Duration(seconds: 2),
+              final parentContext = context; // Capture the parent context
+              showDialog(
+                context: context,
+                builder: (dialogContext) => AlertDialog(
+                  title: Text('Verification Failed'),
+                  content: Text('Do you want to resend the code?'),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(dialogContext).pop();
+                        verificationController.clear();
+                        BlocProvider.of<ForgetPasswordCubit>(parentContext)
+                            .doIntent(
+                          onForgetPasswordClickIntent(
+                            request: ForgetPasswordRequest(
+                              email: widget.email,
+                            ),
+                          ),
+                        );
+                      },
+                      child: Text('OK'),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(dialogContext).pop();
+                      },
+                      child: Text('Cancel'),
+                    ),
+                  ],
                 ),
               );
           }
