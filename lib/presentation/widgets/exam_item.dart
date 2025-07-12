@@ -1,0 +1,48 @@
+import 'package:exam_app/core/app_style.dart';
+import 'package:exam_app/core/assets_manager.dart';
+import 'package:exam_app/data/models/exams_response.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+class ExamItem extends StatelessWidget {
+  const ExamItem({super.key, required this.item});
+
+  final Exams item;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding:  REdgeInsets.all(8.0),
+      child: Container(
+        height: 150.h,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(25),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.2),
+              blurRadius: 8,
+              offset: Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Padding(
+          padding: REdgeInsets.all(16.0),
+          child: Row(children: [
+            Image.asset(
+              AssetsManager.examProfitLogo,
+              width: 100.w,
+              height: 100.h,
+            ),
+            SizedBox(width: 5.w),
+            Text(
+              item.title ?? '',
+              style: AppStyle.forgetPasswordTitle,
+            ),
+          ]),
+        ),
+      ),
+    );
+  }
+}
