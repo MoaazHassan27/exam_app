@@ -1,3 +1,6 @@
+import 'package:exam_app/core/app_style.dart';
+import 'package:exam_app/core/colors_manager.dart';
+import 'package:exam_app/core/routes_manager.dart';
 import 'package:exam_app/presentation/viewmodel/intents/get_exams_intent.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -42,13 +45,33 @@ class _ListOfExamsState extends State<ListOfExams> {
               ),
             );
           case GetExamsSuccessState():
-            return Expanded(
-              child: ListView.builder(
-                itemBuilder: (context, index) =>
-                    ExamItem(item: state.data![index]),
-                itemCount: state.data!.length,
-                scrollDirection: Axis.vertical,
-              ),
+            return Column(
+              children: [
+                state.data!.isEmpty
+                    ? Center(
+                        child: Text(
+                          'There are no exams.',
+                          style: AppStyle.appBarTitle
+                              .copyWith(color: ColorsManager.blueButton),
+                        ),
+                      )
+                    : Expanded(
+                        child: ListView.builder(
+                          itemBuilder: (context, index) => InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                context,
+                                RoutesManager.examStart,
+                                arguments: state.data![index],
+                              );
+                            },
+                            child: ExamItem(item: state.data![index]),
+                          ),
+                          itemCount: state.data!.length,
+                          scrollDirection: Axis.vertical,
+                        ),
+                      ),
+              ],
             );
           case GetExamsErrorState():
             return Text('error');
