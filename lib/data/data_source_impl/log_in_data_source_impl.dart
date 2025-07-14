@@ -1,4 +1,5 @@
 import 'package:injectable/injectable.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/dio_servies.dart';
 import '../../core/result.dart';
@@ -19,6 +20,8 @@ class LogInDataSourceImpl implements LogInDataSource {
     try {
       var res = await apiClient.login(request);
       DioServiceExtension.updateDioWithToken(res.token ?? '');
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('login_token', res.token ?? '');
       return Success(data: res);
     } catch (error) {
       return Error(exception: error);
